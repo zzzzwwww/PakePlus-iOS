@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E43DF92D2D980A5F0092BCB3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E43DF92C2D980A5F0092BCB3 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		E43DF9152D9808470092BCB3 /* PakePlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PakePlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E43DF92C2D980A5F0092BCB3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -34,6 +39,7 @@
 			children = (
 				E43DF9172D9808470092BCB3 /* PakePlus */,
 				E43DF9162D9808470092BCB3 /* Products */,
+				E43DF92C2D980A5F0092BCB3 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43DF92D2D980A5F0092BCB3 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
