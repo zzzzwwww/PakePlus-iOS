@@ -59,7 +59,7 @@ jobs:
                               --scheme "PakePlus" \
                               --configuration "Release" \
                               --output_directory "$GITHUB_WORKSPACE/build" \
-                              --export_method "debugging" \
+                              --export_method "ad-hoc" \
                               --skip_package_ipa true\
                               --codesigning-identity "" \
                               --export_options "ExportOptions.plist"
