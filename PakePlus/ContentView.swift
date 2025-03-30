@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    var url = URL(string: "https://www.apple.com")!
+    var url = URL(string: "https://yandex.com/")!
 
     var body: some View {
         WebView(url: url)

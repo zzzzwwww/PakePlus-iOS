@@ -1,0 +1,52 @@
+name: Build and Archive SwiftUI App
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set up Xcode
+              uses: maxim-lobanov/setup-xcode@v1
+              with:
+                  xcode-version: '15.4.0' # Use the appropriate Xcode version
+
+            # use HadoQr.xcodeproj instead of HadoQr.xcworkspace
+            - name: Resolve Swift Packages
+              run: xcodebuild -resolvePackageDependencies -project PakePlus.xcodeproj -scheme PakePlus
+
+            - name: Build and archive
+              run: |
+                  xcodebuild clean archive \
+                    -project PakePlus.xcodeproj \
+                    -scheme PakePlus \
+                    -configuration Release \
+                    -sdk iphoneos \
+                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive
+
+            - name: Export IPA
+              run: |
+                  xcodebuild -exportArchive \
+                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
+                    -exportOptionsPlist ExportOptions.plist \
+                    -exportPath ${{ github.workspace }}/build
+
+            - name: Upload IPA to GitHub Releases
+              uses: actions/upload-release-asset@v1
+              with:
+                  upload_url: ${{ github.event.release.upload_url }}
+                  asset_path: ${{ github.workspace }}/build/PakePlus.ipa
+                  asset_name: PakePlus.ipa
+                  asset_content_type: application/octet-stream
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
