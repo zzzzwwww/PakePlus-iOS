@@ -13,6 +13,15 @@ jobs:
         runs-on: macos-latest
 
         steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Ruby environment
+              uses: ruby/setup-ruby@v1
+              with:
+                  ruby-version: '3.1' # 你可以选择适合的 Ruby 版本
+                  bundler-cache: true # 缓存 bundler 依赖，提高构建速度
+
             - name: Install Fastlane
               run: |
                   sudo gem install fastlane
@@ -51,6 +60,12 @@ jobs:
                               --configuration "Release" \
                               --output_directory "$GITHUB_WORKSPACE/build" \
                               --export_method "debugging" \
-                              --skip_package_ipa \
+                              --skip_package_ipa true\
                               --codesigning-identity "" \
                               --export_options "ExportOptions.plist"
+
+            - name: Upload IPA artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: IPA
+                  path: build/*.ipa # 上传生成的 .ipa 文件
