@@ -68,6 +68,10 @@ jobs:
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
                     -exportOptionsPlist ExportOptions.plist \
                     -exportPath ${{ github.workspace }}/build
+                    -allowProvisioningUpdates \
+                    -exportFormat ipa \
+                    CODE_SIGNING_REQUIRED=NO \
+                    CODE_SIGN_IDENTITY=""
 
             - name: Upload IPA to GitHub Releases
               uses: actions/upload-release-asset@v1
