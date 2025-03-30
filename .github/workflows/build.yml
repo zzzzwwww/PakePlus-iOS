@@ -32,8 +32,8 @@ jobs:
                     -configuration Release \
                     -sdk iphoneos \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
-                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-                    PROVISIONING_PROFILE_SPECIFIER=""
+                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+                    PROVISIONING_PROFILE_SPECIFIER="" DEVELOPMENT_TEAM=""
 
             - name: Create ExportOptions.plist
               run: |
@@ -58,6 +58,8 @@ jobs:
 
             - name: Export IPA
               run: |
+                  ls -l ExportOptions.plist
+                  cat ExportOptions.plist
                   xcodebuild -exportArchive \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
                     -exportOptionsPlist ExportOptions.plist \
