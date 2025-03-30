@@ -1,4 +1,4 @@
-name: Build and Export Un-Signed IPA
+name: Build and Archive SwiftUI App
 
 on:
     push:
@@ -16,29 +16,37 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Set up Ruby
-              uses: ruby/setup-ruby@v1
-              with:
-                  ruby-version: '2.7'
-
-            - name: Install dependencies
-              run: bundle install
-
             - name: Set up Xcode
               uses: maxim-lobanov/setup-xcode@v1
               with:
                   xcode-version: '16.2.0'
 
-            - name: Build the app
-              run: xcodebuild clean build -workspace PakePlus.xcworkspace -scheme PakePlus -configuration Release -sdk iphoneos -derivedDataPath build
+            - name: Resolve Swift Packages
+              run: xcodebuild -resolvePackageDependencies -project PakePlus.xcodeproj -scheme PakePlus
 
-            - name: Create an unsigned IPA
+            - name: Build and archive
               run: |
-                  mkdir -p output
-                  xcodebuild -exportArchive -archivePath build/Build/Products/Release-iphoneos/PakePlus.xcarchive -exportPath output -exportOptionsPlist ExportOptions.plist
+                  xcodebuild clean archive \
+                    -project PakePlus.xcodeproj \
+                    -scheme PakePlus \
+                    -configuration Release \
+                    -sdk iphoneos \
+                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive
+                    -allowProvisioningUpdates
 
-            - name: Upload IPA
-              uses: actions/upload-artifact@v2
+            - name: Export IPA
+              run: |
+                  xcodebuild -exportArchive \
+                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
+                    -exportOptionsPlist ExportOptions.plist \
+                    -exportPath ${{ github.workspace }}/build
+
+            - name: Upload IPA to GitHub Releases
+              uses: actions/upload-release-asset@v1
               with:
-                  name: unsigned-ipa
-                  path: output/*.ipa
+                  upload_url: ${{ github.event.release.upload_url }}
+                  asset_path: ${{ github.workspace }}/build/PakePlus.ipa
+                  asset_name: PakePlus.ipa
+                  asset_content_type: application/octet-stream
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
