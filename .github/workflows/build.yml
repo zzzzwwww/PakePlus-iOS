@@ -31,7 +31,8 @@ jobs:
                     -scheme PakePlus \
                     -configuration Release \
                     -sdk iphoneos \
-                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive
+                    -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
+                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
             - name: Create ExportOptions.plist
               run: |
