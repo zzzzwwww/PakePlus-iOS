@@ -42,7 +42,7 @@ jobs:
                   <plist version="1.0">
                   <dict>
                       <key>method</key>
-                      <string>none</string>
+                      <string>enterprise</string>
                       <key>signingStyle</key>
                       <string>manual</string>
                       <key>compileBitcode</key>
