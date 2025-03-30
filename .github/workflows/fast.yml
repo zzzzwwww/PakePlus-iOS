@@ -1,0 +1,56 @@
+name: Build App
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: macos-latest
+
+        steps:
+            - name: Install Fastlane
+              run: |
+                  sudo gem install fastlane
+
+            - name: Create ExportOptions.plist
+              run: |
+                  cat > ExportOptions.plist <<EOF
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                  <plist version="1.0">
+                  <dict>
+                      <key>method</key>
+                      <string>debugging</string>
+                      <key>teamID</key>
+                      <string></string>
+                      <key>signingStyle</key>
+                      <string>none</string>
+                      <key>compileBitcode</key>
+                      <false/>
+                      <key>uploadBitcode</key>
+                      <false/>
+                      <key>uploadSymbols</key>
+                      <false/>
+                      <key>signingCertificate</key>
+                      <string></string>
+                      <key>provisioningProfiles</key>
+                      <dict/>
+                  </dict>
+                  </plist>
+                  EOF
+
+            - name: Build unsigned IPA using Fastlane
+              run: |
+                  fastlane gym --project "PakePlus.xcodeproj" \
+                              --scheme "PakePlus" \
+                              --configuration "Release" \
+                              --output_directory "$GITHUB_WORKSPACE/build" \
+                              --export_method "debugging" \
+                              --skip_package_ipa \
+                              --code_signing_identity "" \
+                              --export_options "ExportOptions.plist"
