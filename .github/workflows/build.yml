@@ -33,6 +33,7 @@ jobs:
                     -configuration Release \
                     -sdk iphoneos \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive
+                    -allowProvisioningUpdates
 
             - name: Export IPA
               run: |
