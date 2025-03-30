@@ -32,7 +32,18 @@ jobs:
                     -configuration Release \
                     -sdk iphoneos \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive
-                    -allowProvisioningUpdates
+
+            - name: Create ExportOptions.plist
+              run: |
+                  cat > ExportOptions.plist <<EOF
+                  {
+                      "method": "none",
+                      "signingStyle": "manual",
+                      "compileBitcode": false,
+                      "destination": "export",
+                      "stripSwiftSymbols": true
+                  }
+                  EOF
 
             - name: Export IPA
               run: |
