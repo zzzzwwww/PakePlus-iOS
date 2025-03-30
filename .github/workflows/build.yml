@@ -1,28 +1,19 @@
-name: Build and Archive SwiftUI App
+name: Build iOS IPA
 
 on:
     push:
-        branches:
-            - main
-    pull_request:
         branches:
             - main
 
 jobs:
     build:
         runs-on: macos-latest
-
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
+            - name: Checkout Repository
+              uses: actions/checkout@v4
 
             - name: Set up Xcode
-              uses: maxim-lobanov/setup-xcode@v1
-              with:
-                  xcode-version: '16.2.0'
-
-            - name: Resolve Swift Packages
-              run: xcodebuild -resolvePackageDependencies -project PakePlus.xcodeproj -scheme PakePlus
+              run: sudo xcode-select -switch /Applications/Xcode.app
 
             - name: Build and archive
               run: |
@@ -32,8 +23,7 @@ jobs:
                     -configuration Release \
                     -sdk iphoneos \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
-                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
-                    PROVISIONING_PROFILE_SPECIFIER="" DEVELOPMENT_TEAM=""
+                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO DEVELOPMENT_TEAM=""
 
             - name: Create ExportOptions.plist
               run: |
@@ -43,21 +33,21 @@ jobs:
                   <plist version="1.0">
                   <dict>
                       <key>method</key>
-                      <string>debugging</string>
+                      <string>release-testing</string>
                       <key>signingStyle</key>
-                      <string>manual</string>
+                      <string>none</string>
+                      <key>teamID</key>
+                      <string></string>
                       <key>compileBitcode</key>
                       <false/>
-                      <key>uploadBitcode</key>
-                      <false/>
-                      <key>uploadSymbols</key>
-                      <false/>
+                      <key>destination</key>
+                      <string>export</string>
+                      <key>stripSwiftSymbols</key>
+                      <true/>
                       <key>signingCertificate</key>
-                      <string></string>
+                      <string>Apple Development</string>
                       <key>provisioningProfiles</key>
                       <dict/>
-                      <key>teamID</key>
-                      <string>3AM8N433R2</string>
                   </dict>
                   </plist>
                   EOF
@@ -69,15 +59,11 @@ jobs:
                   xcodebuild -exportArchive \
                     -archivePath ${{ github.workspace }}/build/PakePlus.xcarchive \
                     -exportOptionsPlist ExportOptions.plist \
-                    -exportPath ${{ github.workspace }}/build
-                    -allowProvisioningUpdates
+                    -exportPath ${{ github.workspace }}/build \
+                    CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO DEVELOPMENT_TEAM=""
 
-            - name: Upload IPA to GitHub Releases
-              uses: actions/upload-release-asset@v1
+            - name: Upload IPA
+              uses: actions/upload-artifact@v3
               with:
-                  upload_url: ${{ github.event.release.upload_url }}
-                  asset_path: ${{ github.workspace }}/build/PakePlus.ipa
-                  asset_name: PakePlus.ipa
-                  asset_content_type: application/octet-stream
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  name: PakePlus.ipa
+                  path: ${{ github.workspace }}/build/PakePlus.ipa
