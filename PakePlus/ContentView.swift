@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    var url = URL(string: "https://www.apple.com")!
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, PakePLus!")
-        }
-        .padding()
+        WebView(url: url)
+            .edgesIgnoringSafeArea(.all)
     }
 }
 
