@@ -56,8 +56,6 @@ jobs:
                       <string></string>
                       <key>provisioningProfiles</key>
                       <dict/>
-                      <key>teamID</key>
-                      <string></string>
                   </dict>
                   </plist>
                   EOF
