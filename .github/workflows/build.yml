@@ -44,6 +44,8 @@ jobs:
                   <dict>
                       <key>method</key>
                       <string>debugging</string>
+                      <key>teamID</key>
+                      <string></string>
                       <key>signingStyle</key>
                       <string>none</string>
                       <key>compileBitcode</key>
