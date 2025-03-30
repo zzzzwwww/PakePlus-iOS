@@ -52,5 +52,5 @@ jobs:
                               --output_directory "$GITHUB_WORKSPACE/build" \
                               --export_method "debugging" \
                               --skip_package_ipa \
-                              --code_signing_identity "" \
+                              --codesigning-identity "" \
                               --export_options "ExportOptions.plist"
