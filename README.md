@@ -165,4 +165,3 @@ pnpm run build
 
 1. add auto update feature
 2. support build android apk and build ios ipa
-
