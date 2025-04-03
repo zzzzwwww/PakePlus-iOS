@@ -23,12 +23,25 @@ struct BottomMenuView: View {
                         Image(systemName: "line.3.horizontal")
                             .font(.title2)
                             .foregroundColor(.primary)
-                            .padding()
                     }
                     
                     Spacer()
+                    
+                    Text("PakePlus")
+                    
+                    Spacer()
+                    // 添加一个按钮，点击展开选项菜单
+                    Button(action: {
+                        isShowingDrawer = true
+                    }) {
+                        Image(systemName: "plus.circle")
+                            .font(.title2)
+                            .foregroundColor(.primary)
+                    }
                 }
                 .background(Color(.systemBackground))
+                .padding(.horizontal)
+                .padding(.vertical, 6)
                 
                 // WebView for the selected URL
                 WebView(url: URL(string: urls[selectedTab])!)
@@ -36,7 +49,7 @@ struct BottomMenuView: View {
                 
                 // Bottom Tab Bar
                 HStack(spacing: 0) {
-                    ForEach(0..<urls.count, id: \.self) { index in
+                    ForEach(0 ..< urls.count, id: \.self) { index in
                         Button(action: {
                             selectedTab = index
                         }) {
@@ -95,4 +108,4 @@ struct BottomMenuView: View {
 
 #Preview {
     BottomMenuView()
-} 
+}
