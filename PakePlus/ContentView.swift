@@ -8,11 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    var url = URL(string: "https://ppofficial.pages.dev/")!
-
     var body: some View {
-        WebView(url: url)
-            .edgesIgnoringSafeArea(.bottom)
+        BottomMenuView()
     }
 }
 
