@@ -29,4 +29,15 @@ struct WebView: UIViewRepresentable {
         let request = URLRequest(url: url)
         uiView.load(request)
     }
+
+    // 添加 Coordinator 防止缩放
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator: NSObject, UIScrollViewDelegate {
+        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+            return nil // 返回 nil 禁止缩放
+        }
+    }
 }
