@@ -4,6 +4,7 @@ import WebKit
 struct BottomMenuView: View {
     @State private var selectedTab = 0
     @State private var isShowingDrawer = false
+    @State private var isShowingMenu = false
     
     // Define your URLs here
     private let urls = [
@@ -30,9 +31,12 @@ struct BottomMenuView: View {
                     Text("PakePlus")
                     
                     Spacer()
-                    // 添加一个按钮，点击展开选项菜单
+                    
+                    // 自定义菜单按钮
                     Button(action: {
-                        isShowingDrawer = true
+                        withAnimation(.easeInOut) {
+                            isShowingMenu.toggle()
+                        }
                     }) {
                         Image(systemName: "plus.circle")
                             .font(.title2)
@@ -74,8 +78,59 @@ struct BottomMenuView: View {
                 )
             }
             
+            // 自定义菜单
+            if isShowingMenu {
+                VStack(alignment: .trailing, spacing: 0) {
+                    Button(action: {
+                        // 复制网址动作
+                        isShowingMenu = false
+                    }) {
+                        Text("复制网址")
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .frame(width: 100)
+                    }
+                    .background(Color(.systemBackground))
+                    
+                    Button(action: {
+                        // 外部打开动作
+                        isShowingMenu = false
+                    }) {
+                        Text("外部打开")
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .frame(width: 100)
+                    }
+                    .background(Color(.systemBackground))
+                    
+                    Button(action: {
+                        // 重新加载动作
+                        isShowingMenu = false
+                    }) {
+                        Text("重新加载")
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .frame(width: 100)
+                    }
+                    .background(Color(.systemBackground))
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color(.systemGray4), lineWidth: 0.5)
+                )
+                .position(x: UIScreen.main.bounds.width - 60, y: 90)
+                .transition(.opacity)
+            }
+            
             // Side Drawer
             SideDrawerView(isShowing: $isShowingDrawer)
+        }
+        .onTapGesture {
+            if isShowingMenu {
+                withAnimation(.easeInOut) {
+                    isShowingMenu = false
+                }
+            }
         }
     }
     
