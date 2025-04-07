@@ -90,7 +90,8 @@ struct BottomMenuView: View {
                             .padding(.vertical, 8)
                             .frame(width: 100)
                     }
-                    .background(Color(.systemBackground))
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8, corners: [.topLeft, .topRight])
                     
                     Button(action: {
                         // 外部打开动作
@@ -101,7 +102,7 @@ struct BottomMenuView: View {
                             .padding(.vertical, 8)
                             .frame(width: 100)
                     }
-                    .background(Color(.systemBackground))
+                    .background(Color(.systemGray6))
                     
                     Button(action: {
                         // 重新加载动作
@@ -112,7 +113,8 @@ struct BottomMenuView: View {
                             .padding(.vertical, 8)
                             .frame(width: 100)
                     }
-                    .background(Color(.systemBackground))
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -120,6 +122,7 @@ struct BottomMenuView: View {
                 )
                 .position(x: UIScreen.main.bounds.width - 60, y: 90)
                 .transition(.opacity)
+                .background(Color.white.opacity(0.0001))
             }
             
             // Side Drawer
@@ -163,4 +166,22 @@ struct BottomMenuView: View {
 
 #Preview {
     BottomMenuView()
+}
+
+// Add RoundedCorner extension
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners,
+                              cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
 }
