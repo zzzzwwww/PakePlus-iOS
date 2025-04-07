@@ -130,9 +130,7 @@ struct BottomMenuView: View {
         }
         .onTapGesture {
             if isShowingMenu {
-                withAnimation(.easeInOut) {
-                    isShowingMenu = false
-                }
+                isShowingMenu = false
             }
         }
     }

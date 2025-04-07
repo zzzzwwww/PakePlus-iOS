@@ -14,9 +14,11 @@ struct SideDrawerView: View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Menu")
-                            .font(.title)
-                            .padding(.top, 50)
+                        VStack(alignment: .center, spacing: 15) {
+                            Text("左侧菜单")
+                                .font(.title)
+                                .padding(.top, 50)
+                        }
                         
                         VStack(alignment: .leading, spacing: 15) {
                             MenuButton(title: "Home", icon: "house.fill")
@@ -61,4 +63,4 @@ struct MenuButton: View {
 
 #Preview {
     SideDrawerView(isShowing: .constant(true))
-} 
+}
