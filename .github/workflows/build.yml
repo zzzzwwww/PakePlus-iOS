@@ -46,7 +46,7 @@ jobs:
             - name: Generate AppIcon from appicon.png
               run: |
                   echo "Installing appicon tool..."
-                  brew install appicon
+                  brew install Nonchalant/appicon/appicon
                   echo "Generating AppIcon..."
                   appicon generate appicon.png --output ./PakePlus/Assets.xcassets/AppIcon.appiconset
 
