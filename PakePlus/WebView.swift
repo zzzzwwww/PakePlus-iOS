@@ -61,5 +61,10 @@ struct WebView: UIViewRepresentable {
                 webView.goForward()
             }
         }
+
+        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            print("didFinish navigation: \(String(describing: webView.url))")
+            // currentURL = webView.url
+        }
     }
 }
