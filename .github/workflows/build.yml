@@ -43,12 +43,12 @@ jobs:
                   echo 'export THEOS=$HOME/theos' >> $HOME/.zshrc
                   export THEOS=$HOME/theos
 
-            - name: Generate AppIcon from appicon.png
+            - name: Generate AppIcon
               run: |
                   echo "Installing appicon tool..."
                   brew install Nonchalant/appicon/appicon
                   echo "Generating AppIcon..."
-                  appicon appicon.png --output-path ./PakePlus/Assets.xcassets
+                  appicon pakeplus.png --output-path ./PakePlus/Assets.xcassets/AppIcon.appiconset
 
             - name: Build IPA Package
               run: |
