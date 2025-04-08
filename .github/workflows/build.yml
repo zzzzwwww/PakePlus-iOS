@@ -50,6 +50,25 @@ jobs:
                   echo "Generating AppIcon..."
                   appicon pakeplus.png --output-path ./PakePlus/Assets.xcassets/AppIcon.appiconset
 
+            - name: Update App Name
+              run: |
+                  echo "Modifying App Name in Info.plist..."
+                  PLIST_PATH="./PakePlus/Info.plist"
+
+                  # 检查 Info.plist 是否存在
+                  if [ ! -f "$PLIST_PATH" ]; then
+                      echo "Error: Info.plist not found at $PLIST_PATH"
+                      exit 1
+                  fi
+
+                  # 修改 CFBundleDisplayName（显示名称）
+                  /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName '派克Plus'" "$PLIST_PATH"
+
+                  # 修改 CFBundleName（Bundle 名称，可选）
+                  /usr/libexec/PlistBuddy -c "Set :CFBundleName 'PakePlus'" "$PLIST_PATH"
+
+                  echo "✅ App Name updated to 'PakePlus' in Info.plist"
+
             - name: Build IPA Package
               run: |
                   export THEOS=$HOME/theos
