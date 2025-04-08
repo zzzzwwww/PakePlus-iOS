@@ -34,9 +34,7 @@ struct BottomMenuView: View {
                     
                     // 自定义菜单按钮
                     Button(action: {
-                        withAnimation(.easeInOut) {
-                            isShowingMenu.toggle()
-                        }
+                        isShowingMenu.toggle()
                     }) {
                         Image(systemName: "plus.circle")
                             .font(.title2)
@@ -80,6 +78,11 @@ struct BottomMenuView: View {
             
             // 自定义菜单
             if isShowingMenu {
+                Image(systemName: "arrowtriangle.up.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .position(x: UIScreen.main.bounds.width - 30, y: 50)
+                    .foregroundStyle(Color(.systemGray6))
                 VStack(alignment: .trailing, spacing: 0) {
                     Button(action: {
                         // 复制网址动作
@@ -116,11 +119,7 @@ struct BottomMenuView: View {
                     .background(Color(.systemGray6))
                     .cornerRadius(8, corners: [.bottomLeft, .bottomRight])
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(.systemGray4), lineWidth: 0.5)
-                )
-                .position(x: UIScreen.main.bounds.width - 60, y: 90)
+                .position(x: UIScreen.main.bounds.width - 60, y: 100)
                 .transition(.opacity)
                 .background(Color.white.opacity(0.0001))
             }
@@ -151,11 +150,11 @@ struct BottomMenuView: View {
     private func tabTitle(for index: Int) -> String {
         switch index {
         case 0:
-            return "Home"
+            return "首页"
         case 1:
-            return "Favorites"
+            return "收藏"
         case 2:
-            return "Videos"
+            return "我的"
         default:
             return "Tab"
         }
@@ -173,7 +172,7 @@ struct RoundedCorner: Shape {
 
     func path(in rect: CGRect) -> Path {
         let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners,
-                              cornerRadii: CGSize(width: radius, height: radius))
+                                cornerRadii: CGSize(width: radius, height: radius))
         return Path(path.cgPath)
     }
 }

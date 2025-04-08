@@ -31,7 +31,7 @@ struct SideDrawerView: View {
                     }
                     .padding()
                     .frame(width: 250)
-                    .background(Color(.systemBackground))
+                    .background(Color(.systemGray6))
                     
                     Spacer()
                 }
