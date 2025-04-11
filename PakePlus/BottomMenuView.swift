@@ -10,7 +10,7 @@ struct BottomMenuView: View {
     private let urls = [
         "https://www.baidu.com/",
         "https://juejin.cn/",
-        "https://chat.deepseek.com/"
+        "https://chat.deepseek.com/",
     ]
     
     var body: some View {

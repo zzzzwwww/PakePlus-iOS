@@ -37,6 +37,7 @@ struct WebView: UIViewRepresentable {
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
         let request = URLRequest(url: url)
+        print("updateUIView: \(request.url?.absoluteString ?? "")")
         uiView.load(request)
     }
 
