@@ -92,7 +92,6 @@ const updateBundleId = async (newBundleId) => {
     }
 }
 
-// Main execution
 const main = async () => {
     const { name, showName, version, webUrl, id, pubBody, debug } = ppconfig.ios
 
