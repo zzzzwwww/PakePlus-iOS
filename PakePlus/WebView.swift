@@ -13,14 +13,27 @@ struct WebView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
+        // 禁止双击缩放
         let script = """
             var meta = document.createElement('meta');
             meta.name = 'viewport';
             meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
             document.head.appendChild(meta);
         """
-        let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(scriptInjection)
+        
+        // 2. 加载并注入自定义脚本
+        if let customScript = WebView.loadJSFile(named: "custom") {
+            let userScript = WKUserScript(
+                source: customScript,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: false
+            )
+            webView.configuration.userContentController.addUserScript(userScript)
+        }
+
+        // 3.load url
         webView.load(URLRequest(url: url))
         
         // Add gesture recognizers
@@ -66,6 +79,24 @@ struct WebView: UIViewRepresentable {
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             print("didFinish navigation: \(String(describing: webView.url))")
             // currentURL = webView.url
+        }
+    }
+}
+
+
+extension WebView {
+    static func loadJSFile(named filename: String) -> String? {
+        guard let path = Bundle.main.path(forResource: filename, ofType: "js") else {
+            print("Could not find \(filename).js in bundle")
+            return nil
+        }
+        
+        do {
+            let jsString = try String(contentsOfFile: path, encoding: .utf8)
+            return jsString
+        } catch {
+            print("Error loading \(filename).js: \(error)")
+            return nil
         }
     }
 }
