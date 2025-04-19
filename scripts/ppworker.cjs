@@ -35,6 +35,15 @@ const updateWebUrl = async (webUrl) => {
     }
 }
 
+const updateDebug = async (debug) => {
+    // update debug
+    const webViewPath = path.join(__dirname, '../PakePlus/WebView.swift')
+    let content = await fs.readFile(webViewPath, 'utf8')
+    content = content.replace(/let debug = false/, `let debug = ${debug}`)
+    await fs.writeFile(webViewPath, content)
+    console.log(`✅ Updated debug to: ${debug}`)
+}
+
 // set github env
 const setGithubEnv = (name, version, pubBody) => {
     console.log('setGithubEnv......')
@@ -87,13 +96,16 @@ const updateBundleId = async (newBundleId) => {
 
 // Main execution
 const main = async () => {
-    const { name, showName, version, webUrl, id, pubBody } = ppconfig.ios
+    const { name, showName, version, webUrl, id, pubBody, debug } = ppconfig.ios
 
     // Update app name if provided
     await updateAppName(showName)
 
     // Update web URL if provided
     await updateWebUrl(webUrl)
+
+    // update debug
+    await updateDebug(debug)
 
     // update android applicationId
     await updateBundleId(id)
