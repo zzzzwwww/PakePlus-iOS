@@ -64,7 +64,6 @@ const setGithubEnv = (name, version, pubBody) => {
             }
         }
         console.log('✅ Environment variables written to GITHUB_ENV')
-        // 查看env 变量
         console.log(fs.readFileSync(envPath, 'utf-8'))
     } catch (err) {
         console.error('❌ Failed to parse config or write to GITHUB_ENV:', err)
@@ -82,7 +81,6 @@ const updateBundleId = async (newBundleId) => {
     try {
         console.log(`Updating Bundle ID to ${newBundleId}...`)
         let content = fs.readFileSync(pbxprojPath, 'utf8')
-        // 替换 PRODUCT_BUNDLE_IDENTIFIER
         content = content.replaceAll(
             /PRODUCT_BUNDLE_IDENTIFIER = (.*?);/g,
             `PRODUCT_BUNDLE_IDENTIFIER = ${newBundleId};`
