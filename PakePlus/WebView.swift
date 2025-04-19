@@ -26,7 +26,7 @@ struct WebView: UIViewRepresentable {
             webView.configuration.userContentController.addUserScript(userScript)
         }
         
-        // 禁止双击缩放
+        // disable double tap zoom
         let script = """
             var meta = document.createElement('meta');
             meta.name = 'viewport';
