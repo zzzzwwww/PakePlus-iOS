@@ -66,7 +66,10 @@ const setGithubEnv = (name, version, pubBody) => {
 // update android applicationId
 const updateBundleId = async (newBundleId) => {
     // Write back only if changes were made
-    const pbxprojPath = path.join(projectPath, 'project.pbxproj')
+    const pbxprojPath = path.join(
+        __dirname,
+        '../PakePlus.xcodeproj/project.pbxproj'
+    )
     try {
         console.log(`Updating Bundle ID to ${newBundleId}...`)
         let content = fs.readFileSync(pbxprojPath, 'utf8')
