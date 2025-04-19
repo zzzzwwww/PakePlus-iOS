@@ -10,9 +10,22 @@ import WebKit
 
 struct WebView: UIViewRepresentable {
     let url: URL
+    let debug = true
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
+        
+        // 加载调试
+        if debug, let debugScript = WebView.loadJSFile(named: "vConsole") {
+            let fullScript = debugScript + "\nvar vConsole = new window.VConsole();"
+            let userScript = WKUserScript(
+                source: fullScript,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true
+            )
+            webView.configuration.userContentController.addUserScript(userScript)
+        }
+        
         // 禁止双击缩放
         let script = """
             var meta = document.createElement('meta');
@@ -23,7 +36,7 @@ struct WebView: UIViewRepresentable {
         let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(scriptInjection)
         
-        // 2. 加载并注入自定义脚本
+        // 加载并注入自定义脚本
         if let customScript = WebView.loadJSFile(named: "custom") {
             let userScript = WKUserScript(
                 source: customScript,
@@ -33,7 +46,7 @@ struct WebView: UIViewRepresentable {
             webView.configuration.userContentController.addUserScript(userScript)
         }
 
-        // 3.load url
+        // load url
         webView.load(URLRequest(url: url))
         
         // Add gesture recognizers
