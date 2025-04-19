@@ -113,6 +113,10 @@
         "version": "0.0.1",
         "webUrl": "https://juejin.cn/",
         "id": "com.oaikes.app",
+        "icon": "./app-icon.png",
+        "desc": "PakePlus Project by 1024xiaoshen",
+        "pubBody": "",
+        "isHtml": false,
         "debug": false
     },
     "android": {
