@@ -41,6 +41,21 @@ jobs:
                   echo 'export THEOS=$HOME/theos' >> $HOME/.zshrc
                   export THEOS=$HOME/theos
 
+            - uses: pnpm/action-setup@v3
+              with:
+                  version: latest
+
+            - name: Sync node version and setup cache
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: pnpm
+
+            - name: Init Project Config
+              run: |
+                  pnpm install
+                  pnpm pp:worker
+
             - name: Generate AppIcon
               run: |
                   echo "Installing appicon tool..."

@@ -4,8 +4,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "build": "vite",
-        "pp:worker": "node scripts/ppworker.cjs"
+        "pp:worker": "node ./scripts/ppworker.cjs"
     },
     "keywords": [
         "pakeplus",
