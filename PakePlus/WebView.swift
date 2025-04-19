@@ -36,7 +36,7 @@ struct WebView: UIViewRepresentable {
         let scriptInjection = WKUserScript(source: script, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(scriptInjection)
         
-        // 加载并注入自定义脚本
+        // load custom script
         if let customScript = WebView.loadJSFile(named: "custom") {
             let userScript = WKUserScript(
                 source: customScript,
