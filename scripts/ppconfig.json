@@ -115,7 +115,7 @@
         "id": "com.oaikes.app",
         "icon": "./app-icon.png",
         "desc": "PakePlus Project by 1024xiaoshen",
-        "pubBody": "",
+        "pubBody": "PakePlus ios build body",
         "isHtml": false,
         "debug": false
     },
@@ -132,7 +132,7 @@
         "copyTo": "./app/src/main/res",
         "androidResDir": "./app/src/main/res",
         "desc": "PakePlus Project by 1024xiaoshen",
-        "pubBody": "",
+        "pubBody": "PakePlus android build body",
         "isHtml": false,
         "debug": false
     },
@@ -147,7 +147,7 @@
         "inputPath": "../app-icon.png",
         "tempPath": "./processed-image.png",
         "icnsPath": "../src-tauri/icons/icon.icns",
-        "pubBody": "",
+        "pubBody": "PakePlus desktop build body",
         "isHtml": false,
         "single": true,
         "state": true,
