@@ -15,7 +15,7 @@ struct WebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
         
-        // 加载调试
+        // debug script
         if debug, let debugScript = WebView.loadJSFile(named: "vConsole") {
             let fullScript = debugScript + "\nvar vConsole = new window.VConsole();"
             let userScript = WKUserScript(
