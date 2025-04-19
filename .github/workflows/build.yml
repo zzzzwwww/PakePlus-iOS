@@ -46,7 +46,7 @@ jobs:
                   echo "Installing appicon tool..."
                   brew install Nonchalant/appicon/appicon
                   echo "Generating AppIcon..."
-                  appicon pakeplus.png --output-path ./PakePlus/Assets.xcassets/AppIcon.appiconset
+                  appicon app-icon.png --output-path ./PakePlus/Assets.xcassets/AppIcon.appiconset
 
             - name: Update App Name
               run: |
@@ -73,6 +73,5 @@ jobs:
                   tag_name: 'pakeplus-v1.0.0'
                   body: 'pakeplus-v1.0.0'
                   draft: false
-                  publish: true
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

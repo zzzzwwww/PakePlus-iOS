@@ -2,3 +2,4 @@
 .vscode
 .env
 .theos
+node_modules
