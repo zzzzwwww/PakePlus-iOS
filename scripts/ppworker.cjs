@@ -104,7 +104,11 @@ const main = async () => {
 
 // run
 try {
-    await main()
+    ;(async () => {
+        console.log('🚀 worker start')
+        await main()
+        console.log('🚀 worker end')
+    })()
 } catch (error) {
     console.error('❌ Worker Error:', error)
 }
