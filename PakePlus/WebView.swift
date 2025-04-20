@@ -67,7 +67,7 @@ struct WebView: UIViewRepresentable {
         uiView.load(request)
     }
 
-    // 添加 Coordinator 防止缩放
+    // add coordinator to prevent zoom
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }
