@@ -74,7 +74,8 @@ struct WebView: UIViewRepresentable {
 
     class Coordinator: NSObject, UIScrollViewDelegate {
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-            return nil // 返回 nil 禁止缩放
+            // disable zoom
+            return nil
         }
         
         @objc func handleRightSwipe(_ gesture: UISwipeGestureRecognizer) {
