@@ -25,8 +25,8 @@ const updateWebUrl = async (webUrl) => {
         )
         let content = await fs.readFile(contentViewPath, 'utf8')
         content = content.replace(
-            /WebView(url: URL(string: ".*?"))/,
-            `WebView(url: URL(string: "${webUrl}"))`
+            /WebView\(url: URL\(string: ".*?"\)!\)/,
+            `WebView(url: URL(string: "${webUrl}")!)`
         )
         await fs.writeFile(contentViewPath, content)
         console.log(`✅ Updated web URL to: ${webUrl}`)
