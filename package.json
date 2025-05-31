@@ -4,7 +4,8 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "pp:worker": "node ./scripts/ppworker.cjs"
+        "pp:worker": "node ./scripts/ppworker.cjs",
+        "restore": "git restore ."
     },
     "keywords": [
         "pakeplus",
