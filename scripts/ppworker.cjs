@@ -35,11 +35,21 @@ const updateWebUrl = async (webUrl) => {
     }
 }
 
-const updateDebug = async (debug) => {
+const updateWebEnv = async (debug, webview) => {
     // update debug
     const webViewPath = path.join(__dirname, '../PakePlus/WebView.swift')
     let content = await fs.readFile(webViewPath, 'utf8')
     content = content.replace(/let debug = false/, `let debug = ${debug}`)
+
+    // update userAgent
+    const { userAgent } = webview
+    if (userAgent) {
+        content = content.replace(
+            `// webView.customUserAgent = ""`,
+            `webView.customUserAgent = "${userAgent}"`
+        )
+    }
+
     await fs.writeFile(webViewPath, content)
     console.log(`✅ Updated debug to: ${debug}`)
 }
@@ -93,6 +103,7 @@ const updateBundleId = async (newBundleId) => {
 }
 
 const main = async () => {
+    const { webview } = ppconfig.phone
     const { name, showName, version, webUrl, id, pubBody, debug } = ppconfig.ios
 
     // Update app name if provided
@@ -102,7 +113,7 @@ const main = async () => {
     await updateWebUrl(webUrl)
 
     // update debug
-    await updateDebug(debug)
+    await updateWebEnv(debug, webview)
 
     // update android applicationId
     await updateBundleId(id)
@@ -115,12 +126,12 @@ const main = async () => {
 }
 
 // run
-try {
-    ;(async () => {
+;(async () => {
+    try {
         console.log('🚀 worker start')
         await main()
         console.log('🚀 worker end')
-    })()
-} catch (error) {
-    console.error('❌ Worker Error:', error)
-}
+    } catch (error) {
+        console.error('❌ Worker Error:', error)
+    }
+})()
