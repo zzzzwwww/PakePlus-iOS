@@ -90,7 +90,7 @@ jobs:
                   ls -l $DIR
 
             - name: Upload IPA to GitHub Releases
-              uses: softprops/action-gh-release@v2
+              uses: softprops/action-gh-release@v1
               with:
                   files: ${{ env.ipa_path }}
                   tag_name: '${{ env.NAME }}'
